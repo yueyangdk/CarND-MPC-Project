@@ -7,21 +7,21 @@ This project implements a Model Predictive Controller to navigate a reference tr
 
 ## Introduction
 
-###The Model: 
+### The Model: 
 
 The kinematic model includes the vehicle's x and y coordinates, orientation angle (psi), and velocity, as well as the cross-track error and psi error (epsi). Actuator outputs are acceleration (throttle value) and delta (steering angle). The model combines the state and actuations from the previous timestep to calculate the state for the current timestep based on the equations below:
 
 ![equations](./eqns.png)
 
-###Timestep Length and Elapsed Duration (N & dt): 
+### Timestep Length and Elapsed Duration (N & dt): 
 
 The values chosen for N and dt are 10 and 0.1, respectively. Admittedly, this was at the suggestion of Udacity's MPC quiz. These values mean that the optimizer is considering a one-second duration in which to determine a corrective trajectory. Adjusting either N or dt (even by small amounts) often produced erratic behavior. Other values tried include 20 / 0.05, 8 / 0.125, 6 / 0.15, and many others. 
 
-###Polynomial Fitting and MPC Preprocessing: 
+### Polynomial Fitting and MPC Preprocessing: 
 
 The waypoints are preprocessed by transforming them to the vehicle's perspective. This simplifies the process to fit a polynomial to the waypoints because the vehicle's x and y coordinates are now at the origin (0, 0) and the orientation angle is also zero. 
 
-###Model Predictive Control with Latency: 
+### Model Predictive Control with Latency: 
 
 The approach to handling the latency is to not only limit the speed and orientation angle but also alter the time step. First, according to the kinematic model, the state of current timestep depends on the actuation from previous timestep. With a delay of 100ms, which happens to be the timestep interval, the actuations are applied an additional timestep later. That's the change we need to make in our code. Also, we can take additional element into account, by penalizing the product of velocity and delta and results will have a much smoother cornering performance.
 
@@ -68,7 +68,7 @@ The approach to handling the latency is to not only limit the speed and orientat
 ## Final Paramters
 The parameters were chosen manually by try and error. A very large potion of the cost function is mude up of cte and orientational error and the reason is obvious because the mainly objective to stay with reference trajectery is to minimize both error. Other penalizing factors are chosen based on particular need for better performance. An example of a non-linear cost function for optimization is given by:
 
-![cost function](./cost_function.png)
+![cost function](./cost_function.PNG)
 
 
 
