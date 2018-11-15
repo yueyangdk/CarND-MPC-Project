@@ -68,7 +68,7 @@ The approach to handling the latency is to not only limit the speed and orientat
 ## Final Paramters
 The parameters were chosen manually by try and error. A very large potion of the cost function is mude up of cte and orientational error and the reason is obvious because the mainly objective to stay with reference trajectery is to minimize both error. Other penalizing factors are chosen based on particular need for better performance. An example of a non-linear cost function for optimization is given by:
 
-![cost function](./blob/master/cost_function.png)
+![cost function](.cost_function.png)
 
 
 
